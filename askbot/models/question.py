@@ -1706,7 +1706,10 @@ class Thread(models.Model):
         # parameter visitor is there to get summary out by the user groups
         if askbot_settings.GROUPS_ENABLED:
             return None
-        return cache.cache.get(self.get_summary_cache_key())
+        html = cache.cache.get(self.get_summary_cache_key())
+        if not html:
+            return None
+        return html.decode("utf-8")
 
     def update_summary_html(self, visitor=None):
         # TODO: it is quite wrong that visitor is an argument here
