@@ -9,6 +9,8 @@ import urllib
 class CASLoginProvider(BaseProtocol):
 
     def __init__(self, success_redirect_url=None):
+        if isinstance(success_redirect_url, unicode):
+            success_redirect_url = success_redirect_url.encode('utf-8')
         self.name = 'cas'
         self.protocol_type = 'cas'
         self.display_name = askbot_settings.CAS_SERVER_NAME
